@@ -3,12 +3,17 @@ package com.example.sem2lab1;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.webkit.WebView;
 import android.widget.Toast;
 
+import java.util.Objects;
+
 public class InternetActivity extends AppCompatActivity {
     WebView webView;
+
+    final String TAG = "InternetActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +31,7 @@ public class InternetActivity extends AppCompatActivity {
             try {
                 webView.loadUrl(link);
             } catch (Exception e) {
+                Log.e(TAG, Objects.requireNonNull(e.getMessage()));
                 Toast.makeText(this, "Произошла ошибка", Toast.LENGTH_SHORT).show();
             }
         }

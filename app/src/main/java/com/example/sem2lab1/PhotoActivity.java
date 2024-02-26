@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -25,7 +26,7 @@ public class PhotoActivity extends AppCompatActivity {
 
         ActivityResultLauncher<Intent> mStartForResult = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 result -> {
-
+                    Log.i("PhotoActivity", "Result is "+result.getResultCode());
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         Intent intent = result.getData();
                         Bitmap thumbnailBitmap = intent.getParcelableExtra("data");

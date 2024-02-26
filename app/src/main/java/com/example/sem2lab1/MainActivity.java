@@ -1,7 +1,5 @@
 package com.example.sem2lab1;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -10,10 +8,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.List;
 import java.util.Objects;
@@ -21,11 +21,13 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
     Button makePhoto, openWebsite, makeCall, sendMessage;
     EditText number, link, message;
+    static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d(TAG, "Find edittext elements by id");
         number = findViewById(R.id.phone_number);
         link = findViewById(R.id.link);
 
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
         });
 
+        Log.d(TAG, "Set textChangedListener to number edittext");
         number.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s, int start, int before,
                                       int count) {
@@ -104,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
                 myIntent.putExtra(Intent.EXTRA_TEXT, message.getText().toString());//
                 startActivity(Intent.createChooser(myIntent, "Share with"));
             } else {
+                Log.i(TAG, "Telegram not Installed message");
                 Toast.makeText(MainActivity.this, "Telegram not Installed", Toast.LENGTH_SHORT).show();
             }
         });
@@ -111,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static boolean isAppAvailable(Context context, String appName) {
         PackageManager pm = context.getPackageManager();
+        Log.w(TAG, "Method getInstalledPackages may cause an exception on Android 11");
         List<PackageInfo> packages = pm.getInstalledPackages(PackageManager.GET_META_DATA);
         for (PackageInfo info : packages) {
             if (Objects.equals(info.packageName, appName))
